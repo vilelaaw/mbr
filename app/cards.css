@@ -1,0 +1,89 @@
+/* Shared elevated surface for the page's content cards. */
+:root {
+  --card-radius: 14px;
+  --card-border: rgb(28 26 23 / 12%);
+  --card-elevation: 0 1px 2px rgb(28 26 23 / 24%), 0 2px 6px rgb(28 26 23 / 14%);
+}
+
+main :is(.about-panel, .services-panel, .service-card, .services-carousel-card, .portfolio-card) {
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  background-color: var(--surface);
+  box-shadow: var(--card-elevation);
+}
+
+/* Leave room for the elevation inside the carousel clipping boundary. */
+main :is(.services-carousel-track, .portfolio-cards) {
+  padding: 4px 4px 8px;
+}
+
+main .about-portrait {
+  border-radius: calc(var(--card-radius) - 4px);
+}
+
+/* Elevated pill buttons; image cards keep their own interactive surface. */
+main :is(.header-contact, .footer-action, .portfolio-cta, .text-arrow-link, .hero-caption a, .floating-nav > button, .contact-content address a, .whatsapp-floating) {
+  border: 1px solid var(--neutral);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgb(28 26 23 / 18%), 0 2px 5px rgb(28 26 23 / 10%);
+  transition: background-color .2s ease, box-shadow .2s ease, opacity .35s ease, visibility .35s ease, transform .35s ease;
+}
+
+main :is(.header-contact, .footer-action, .portfolio-cta, .text-arrow-link) {
+  min-height: 44px;
+  padding: .7rem 1.25rem;
+  justify-content: center;
+  font-weight: 500;
+}
+
+main :is(.header-contact, .footer-action, .portfolio-cta, .text-arrow-link, .hero-caption a, .floating-nav > button, .contact-content address a, .whatsapp-floating):hover {
+  background: var(--beige);
+  color: var(--text);
+  opacity: 1;
+  box-shadow: 0 2px 4px rgb(28 26 23 / 18%), 0 4px 8px rgb(28 26 23 / 12%);
+}
+
+main :is(.header-contact, .footer-action, .portfolio-cta, .text-arrow-link, .hero-caption a, .floating-nav > button, .contact-content address a, .whatsapp-floating):active {
+  box-shadow: 0 1px 2px rgb(28 26 23 / 14%);
+}
+
+main :is(.header-contact, .footer-action, .portfolio-cta, .text-arrow-link, .hero-caption a, .floating-nav > button, .contact-content address a, .whatsapp-floating):focus-visible {
+  outline: 2px solid var(--support);
+  outline-offset: 4px;
+}
+
+main .hero-caption a,
+main .hero-caption a:hover,
+main .hero-caption a:active {
+  background: transparent;
+  color: var(--surface);
+  border-color: rgb(250 248 245 / 65%);
+  box-shadow: none;
+}
+
+main .hero-caption a:focus-visible {
+  outline-color: var(--surface);
+}
+
+main .portfolio-card .portfolio-cta,
+main .portfolio-card .portfolio-cta:hover,
+main .portfolio-card .portfolio-cta:active {
+  background: transparent;
+  color: var(--surface);
+  border-color: rgb(250 248 245 / 65%);
+  box-shadow: none;
+}
+
+main .portfolio-card .portfolio-cta:hover {
+  border-color: var(--surface);
+}
+
+main .portfolio-card .portfolio-cta:focus-visible {
+  outline-color: var(--surface);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main :is(.header-contact, .footer-action, .portfolio-cta, .text-arrow-link, .hero-caption a, .floating-nav > button, .contact-content address a, .whatsapp-floating) { transition: none; }
+}

@@ -46,7 +46,7 @@ export function HeroVisual({ children }: { children: ReactNode }) {
       }}
     >
       <div className="hero-media">
-        <img ref={photo} src="/images/hero.jpg" alt="Projeto de interiores desenvolvido pelo Studio M.B.R." className="hero-photo" draggable={false} fetchPriority="high" />
+        <img ref={photo} src="/images/hero.jpg" alt="Projeto de interiores desenvolvido pelo Studio M.B.R." className="hero-photo" draggable={false} fetchPriority="high" loading="eager" decoding="async" />
       </div>
       <div className="hero-content">{children}</div>
     </div>

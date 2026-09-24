@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Heebo, Lato } from 'next/font/google';
 import './globals.css';
+import './cards.css';
+import './hero-mobile.css';
 
 const heebo = Heebo({
   variable: '--font-heebo',
@@ -17,7 +19,7 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: 'Studio M.B.R. | Manuele Barbosa — Designer de Interiores',
+  title: 'Studio M.B.R. | Manuele Barbosa · Designer de Interiores',
   description:
     'Projetos, consultoria de interiores e marcenaria planejada por Manuele Barbosa, do Studio M.B.R.',
 };
@@ -29,6 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`${heebo.variable} ${lato.variable}`}>
+      <head>
+        <link rel="preload" as="image" href="/images/hero.jpg" fetchPriority="high" />
+      </head>
       <body>{children}</body>
     </html>
   );

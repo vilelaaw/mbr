@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { useRef, useState } from "react";
+import { ArrowRight } from "lucide-react";
 
 export const projects: { name: string; image: string; instagramUrl: string | null }[] = [
   { name: "Sala de Estar", image: "/images/projeto-01.jpg", instagramUrl: "https://www.instagram.com/mbr.interiores/p/C580Gmdg9Fu/" },
@@ -17,32 +17,14 @@ export const projects: { name: string; image: string; instagramUrl: string | nul
 
 export function ProjectGallery() {
   const [active, setActive] = useState(0);
-  const track = useRef<HTMLDivElement>(null);
   const gesture = useRef<{ x: number; y: number } | null>(null);
   const suppressClickUntil = useRef(0);
 
-  useEffect(() => {
-    if (!window.matchMedia("(max-width: 1023px)").matches) return;
-    const container = track.current;
-    if (!container) return;
-    let frame = 0;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const center = () => {
-      const card = container.children[active] as HTMLElement;
-      const bounds = card.getBoundingClientRect();
-      const viewport = container.getBoundingClientRect();
-      const destination = Math.max(0, Math.min(container.scrollWidth - container.clientWidth,
-        container.scrollLeft + bounds.left - viewport.left - (container.clientWidth - bounds.width) / 2));
-      container.scrollLeft += (destination - container.scrollLeft) * (reduced ? 1 : .58);
-      if (!reduced && Math.abs(destination - container.scrollLeft) > .5) frame = requestAnimationFrame(center);
-    };
-    frame = requestAnimationFrame(center);
-    return () => cancelAnimationFrame(frame);
-  }, [active]);
+  const firstVisible = Math.max(0, Math.min(active - 1, projects.length - 3));
 
   return (
     <div className="portfolio-gallery">
-      <div className="portfolio-cards" ref={track}
+      <div className="portfolio-cards"
         onPointerDown={(event) => {
           if (event.pointerType !== "touch" || !window.matchMedia("(max-width: 1023px)").matches) return;
           gesture.current = { x: event.clientX, y: event.clientY };
@@ -64,7 +46,7 @@ export function ProjectGallery() {
         {projects.map((project, index) => {
           const expanded = index === active;
           return (
-            <article key={index} className={`portfolio-card ${expanded ? "is-active" : ""}`}
+            <article key={index} data-mobile-visible={index >= firstVisible && index < firstVisible + 3} className={`portfolio-card ${expanded ? "is-active" : ""}`}
               onMouseEnter={() => { if (window.matchMedia("(hover: hover) and (min-width: 1024px)").matches) setActive(index); }}
               onFocus={() => { if (Date.now() >= suppressClickUntil.current) setActive(index); }}>
               <img src={project.image} alt={`Capa de ${project.name}`} loading="lazy" decoding="async" />
@@ -77,11 +59,11 @@ export function ProjectGallery() {
                 <h3>{project.name}</h3>
                 {project.instagramUrl ? (
                   <a className="portfolio-cta" href={project.instagramUrl} target="_blank" rel="noreferrer">
-                    Ver projeto <ArrowUpRight size={18} aria-hidden="true" />
+                    Ver projeto <ArrowRight size={18} aria-hidden="true" />
                   </a>
                 ) : (
                   <button className="portfolio-cta" type="button" disabled title="Post do projeto ainda não disponível">
-                    Ver projeto <ArrowUpRight size={18} aria-hidden="true" />
+                    Ver projeto <ArrowRight size={18} aria-hidden="true" />
                   </button>
                 )}
               </div>

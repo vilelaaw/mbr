@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Mail, Menu, X } from "lucide-react";
-import { ServiceGallery } from "../components/service-gallery";
+import { ServicesCarousel } from "../components/services-carousel";
+import { ArrowRight, Mail, Menu, X } from "lucide-react";
 import { HeroVisual } from "../components/hero-visual";
 import { ProjectGallery } from "../components/project-gallery";
-import { useServiceStack } from "../hooks/use-service-stack";
 
 const navigation = [
   { label: "Sobre mim", href: "#sobre" },
@@ -52,7 +51,6 @@ const services = [
 ];
 
 export default function Home() {
-  useServiceStack();
   const [menuOpen, setMenuOpen] = useState(false);
   const [introVisible, setIntroVisible] = useState(true);
   const [heroPassed, setHeroPassed] = useState(false);
@@ -75,7 +73,7 @@ export default function Home() {
     const introTimer = window.setTimeout(() => {
       document.body.classList.remove("intro-active");
       setIntroVisible(false);
-    }, 2200);
+    }, 1000);
 
     return () => {
       window.clearTimeout(introTimer);
@@ -223,7 +221,7 @@ export default function Home() {
               {Array.from(introTitle).map((letter, index) => (
                 <span
                   key={`${letter}-${index}`}
-                  style={{ animationDelay: `${0.12 + index * 0.055}s` }}
+                  style={{ animationDelay: `${0.04 + index * 0.025}s` }}
                 >
                   {letter === " " ? "\u00a0" : letter}
                 </span>
@@ -236,7 +234,7 @@ export default function Home() {
         </div>
       )}
 
-      <header className={`floating-header ${heroPassed ? "is-hidden-after-hero" : ""} ${navbarHidden ? "is-hidden-on-scroll" : ""}`}>
+      <header className={`floating-header ${navbarHidden ? "is-hidden-on-scroll" : ""}`}>
         <div className="floating-nav">
           <a href="#inicio" className="brand-mark" onClick={closeMenu}>
             M.B.R
@@ -259,7 +257,7 @@ export default function Home() {
             rel="noreferrer"
             className="header-contact hidden md:inline-flex"
           >
-            Vamos conversar <ArrowUpRight size={16} strokeWidth={1.8} />
+            Vamos conversar <ArrowRight size={16} strokeWidth={1.8} />
           </a>
 
           <button
@@ -300,15 +298,23 @@ export default function Home() {
       <section id="inicio">
         <div className="hero-shell">
           <HeroVisual>
+            <div className="hero-mobile-layout">
             <div className="hero-caption">
               <p>Interiores que inspiram e abraçam</p>
               <a href="https://wa.me/5519988201292" target="_blank" rel="noreferrer" aria-label="Conversar pelo WhatsApp">
-                <ArrowUpRight size={24} strokeWidth={1.5} />
+                <ArrowRight size={24} strokeWidth={1.5} />
               </a>
             </div>
             <h1 className="hero-brand" aria-label="Studio M.B.R">
               Studio <span>M.B.R</span>
             </h1>
+            <div className="hero-mobile-summary">
+              <p>Arquitetura e interiores pensados<br />para a sua forma de viver.</p>
+              <a href="#projetos" className="hero-projects-button">
+                Conheça nossos projetos <ArrowRight size={20} strokeWidth={1.5} aria-hidden="true" />
+              </a>
+            </div>
+            </div>
           </HeroVisual>
 
         </div>
@@ -329,7 +335,7 @@ export default function Home() {
                 />
               </div>
             <div className="about-details">
-              <p className="about-kicker">01 — Studio M.B.R.</p>
+              <p className="about-kicker">01 · Studio M.B.R.</p>
               <h2 className="about-title">Sobre mim</h2>
               <div className="about-introduction">
                 <h3>Prazer, Manuele Barbosa.</h3>
@@ -340,7 +346,7 @@ export default function Home() {
                 </p>
                 <p>
                   Ao longo de mais de 5 anos de experiência, desenvolvi soluções
-                  que unem criatividade e técnica — onde ofereço soluções
+                  que unem criatividade e técnica, onde ofereço soluções
                   completas, desde consultorias e projetos de interiores, até
                   parcerias em marcenaria e conferência técnica.
                 </p>
@@ -389,15 +395,8 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="services-grid">
-            {services.map((service) => (
-              <article key={service.number} className="service-card" data-reveal>
-                <ServiceGallery title={service.title} images={service.images} />
-                <p className="service-number">{service.number}</p>
-                <h3>{service.title}</h3>
-                <p className="service-description">{service.description}</p>
-              </article>
-            ))}
+          <div className="mt-12">
+            <ServicesCarousel services={services} />
           </div>
         </div>
       </section>
@@ -432,7 +431,7 @@ export default function Home() {
                 rel="noreferrer"
                 className="footer-action mt-8"
               >
-                Envie sua ideia <ArrowUpRight size={18} strokeWidth={1.6} />
+                Envie sua ideia <ArrowRight size={18} strokeWidth={1.6} />
               </a>
             </div>
           </div>
@@ -482,7 +481,7 @@ export default function Home() {
               rel="noreferrer"
               className="footer-action mt-14 inline-flex rounded-sm border border-current px-5 py-4"
             >
-              Chamar no WhatsApp <ArrowUpRight size={20} strokeWidth={1.6} />
+              Chamar no WhatsApp <ArrowRight size={20} strokeWidth={1.6} />
             </a>
             <address className="mt-6 flex items-center justify-center gap-4 not-italic">
               <a href="https://www.instagram.com/mbr.interiores/" target="_blank" rel="noreferrer"
@@ -503,7 +502,7 @@ export default function Home() {
           </div>
 
           <div className="flex items-center justify-between gap-3 py-7 text-xs text-taupe sm:text-sm">
-            <p>Studio M.B.R. — Manuele Barbosa</p>
+            <p>Studio M.B.R. · Manuele Barbosa</p>
             <p>Design de Interiores</p>
           </div>
         </div>
