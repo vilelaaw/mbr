@@ -69,14 +69,42 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    const isReload = navigation?.type === "reload";
+    const previousRestoration = history.scrollRestoration;
+    const resetScroll = () => {
+      if (isReload) window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    };
+    if (isReload) {
+      history.scrollRestoration = "manual";
+      if (window.location.hash) {
+        history.replaceState(history.state, "", window.location.pathname + window.location.search);
+      }
+      resetScroll();
+      window.addEventListener("pageshow", resetScroll, { once: true });
+    }
     document.body.classList.add("intro-active");
-    const introTimer = window.setTimeout(() => {
+    let disposed = false;
+    const finishIntro = () => {
+      if (disposed) return;
+      resetScroll();
       document.body.classList.remove("intro-active");
       setIntroVisible(false);
-    }, 1100);
+    };
+    // Follow the CSS timeline, including when it finished before hydration.
+    const introAnimation = document.querySelector(".site-intro")?.getAnimations()[0];
+    let fallbackTimer: number | undefined;
+    if (introAnimation) {
+      void introAnimation.finished.then(finishIntro).catch(() => {});
+    } else {
+      fallbackTimer = window.setTimeout(finishIntro, 1400);
+    }
 
     return () => {
-      window.clearTimeout(introTimer);
+      disposed = true;
+      window.clearTimeout(fallbackTimer);
+      window.removeEventListener("pageshow", resetScroll);
+      if (isReload) history.scrollRestoration = previousRestoration;
       document.body.classList.remove("intro-active");
     };
   }, []);
