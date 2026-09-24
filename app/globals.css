@@ -56,7 +56,7 @@ body.intro-active { overflow: hidden; }
   place-items: center;
   overflow: hidden;
   background: var(--beige);
-  animation: introExit .25s cubic-bezier(.76, 0, .24, 1) .75s forwards;
+  animation: introExit .2s cubic-bezier(.76, 0, .24, 1) .9s forwards;
 }
 
 .intro-content {
@@ -101,7 +101,7 @@ body.intro-active { overflow: hidden; }
 .intro-name span {
   display: block;
   clip-path: inset(0 100% 0 0);
-  animation: introTyping .35s steps(15, end) .3s forwards;
+  animation: introTyping .5s steps(15, end) .3s forwards;
 }
 
 .intro-name::after {
@@ -113,7 +113,7 @@ body.intro-active { overflow: hidden; }
   background: currentColor;
   content: '';
   opacity: 0;
-  animation: introCaret .35s steps(15, end) .3s forwards;
+  animation: introCaret .5s steps(15, end) .3s forwards;
 }
 
 ::selection { background: var(--text); color: var(--surface); }
@@ -394,10 +394,10 @@ a:focus-visible, button:focus-visible { outline: 1px solid currentColor; outline
   visibility: hidden;
   animation: none;
 }
-[data-hero-ready="true"] .hero-photo { animation: heroImage .45s ease both; }
+[data-hero-ready="true"] .hero-photo { animation: heroImage .3s ease both; }
 [data-hero-ready="true"] .floating-header { animation: navbarEnter .4s .05s ease backwards; }
-[data-hero-ready="true"] .hero-brand { animation: heroReveal .45s .1s ease both; }
-[data-hero-ready="true"] .hero-caption { animation: heroReveal .45s .15s ease both; }
+[data-hero-ready="true"] .hero-brand { animation: heroReveal .3s .05s ease both; }
+[data-hero-ready="true"] .hero-caption { animation: heroReveal .3s .08s ease both; }
 @keyframes navbarEnter {
   from { opacity: 0; visibility: hidden; translate: 0 -12px; }
   to { opacity: 1; visibility: visible; translate: 0 0; }

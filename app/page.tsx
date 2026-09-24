@@ -73,7 +73,7 @@ export default function Home() {
     const introTimer = window.setTimeout(() => {
       document.body.classList.remove("intro-active");
       setIntroVisible(false);
-    }, 1000);
+    }, 1100);
 
     return () => {
       window.clearTimeout(introTimer);
